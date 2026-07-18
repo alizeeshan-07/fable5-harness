@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Fable 5 Harness — interactive demos</title>
+<style>
+  :root{ --ats-blue:#2779C2; --ats-gold:#F8B916; --page:#F7F8FA; --card:#fff; --ink:#1a2733; --muted:#5b6b7a; --line:#e3e7eb;
+    --font:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; }
+  @media (prefers-color-scheme: dark){ :root{ --page:#12171c; --card:#1a2129; --ink:#e8edf2; --muted:#9fb0bd; --line:#2a333d; } }
+  *{box-sizing:border-box} body{margin:0;background:var(--page);color:var(--ink);font-family:var(--font);
+    line-height:1.6;display:flex;justify-content:center;padding:48px 16px}
+  .wrap{width:100%;max-width:640px}
+  .kicker{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--ats-blue);font-weight:600;margin:0 0 4px}
+  h1{font-size:24px;font-weight:600;margin:0 0 6px}
+  p.sub{color:var(--muted);margin:0 0 28px}
+  a.card{display:block;text-decoration:none;color:inherit;background:var(--card);border:1px solid var(--line);
+    border-radius:12px;padding:16px 18px;margin-bottom:12px;border-left:3px solid var(--ats-gold)}
+  a.card:hover{border-color:var(--ats-blue)}
+  .t{font-size:16px;font-weight:600} .d{font-size:13px;color:var(--muted);margin-top:2px}
+  .foot{font-size:12px;color:var(--muted);margin-top:24px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <p class="kicker">Fable 5 Harness</p>
+  <h1>Interactive demos</h1>
+  <p class="sub">Live companions to the article series. Drag, click, and watch the concept move.</p>
+
+  <a class="card" href="effort-dial.html">
+    <div class="t">The effort dial</div>
+    <div class="d">Article 1 — drag effort low to max and watch prose, reasoning depth, and tool calls move together while max_tokens stays fixed.</div>
+  </a>
+
+  <p class="foot">By Ali Zeeshan · Adept Tech Solutions. More demos land as the series ships.</p>
+</div>
+</body>
+</html>

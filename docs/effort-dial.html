@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Fable 5 · the effort dial</title>
+<style>
+  :root{
+    --ats-blue:#2779C2; --ats-gold:#F8B916;
+    --page:#F7F8FA; --card:#ffffff; --track:#eceef1;
+    --ink:#1a2733; --muted:#5b6b7a; --hint:#8a97a3; --line:#e3e7eb;
+    --font:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{ --page:#12171c; --card:#1a2129; --track:#232c35;
+      --ink:#e8edf2; --muted:#9fb0bd; --hint:#6f8090; --line:#2a333d; }
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--page);color:var(--ink);font-family:var(--font);
+    line-height:1.6;display:flex;justify-content:center;padding:32px 16px}
+  .wrap{width:100%;max-width:640px}
+  .kicker{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--ats-blue);font-weight:600;margin:0 0 4px}
+  h1{font-size:22px;font-weight:600;margin:0 0 18px}
+  .lvlrow{display:flex;align-items:baseline;gap:10px;margin-bottom:4px}
+  #lvl{font-size:26px;font-weight:600;text-transform:lowercase}
+  #dfl{font-size:12px;color:var(--ats-blue);background:rgba(39,121,194,.12);padding:2px 9px;border-radius:999px;font-weight:600}
+  #tag{font-size:14px;color:var(--muted);margin-bottom:16px;min-height:40px}
+  input[type=range]{width:100%;accent-color:var(--ats-blue);height:22px}
+  .ticks{display:flex;justify-content:space-between;font-size:12px;color:var(--hint);margin-top:2px}
+  .gauges{display:grid;gap:13px;margin:22px 0}
+  .glab{display:flex;justify-content:space-between;font-size:13px;margin-bottom:5px}
+  .glab .n{color:var(--muted)} .glab .v{color:var(--hint)}
+  .bar{height:10px;background:var(--track);border-radius:999px;overflow:hidden}
+  .fill{height:100%;background:var(--ats-blue);border-radius:999px;transition:width .28s ease}
+  .fence{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px}
+  .fhead{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px}
+  .fhead .l{font-size:13px;color:var(--muted)} .fhead .r{font-size:13px;color:var(--ats-gold);font-weight:600}
+  .outwrap{position:relative;height:16px;background:var(--track);border-radius:999px;overflow:visible}
+  .outbar{height:16px;background:var(--ats-gold);border-radius:999px;transition:width .28s ease;position:absolute;left:0;top:0}
+  .fenceline{position:absolute;top:-5px;bottom:-5px;left:88%;width:2px;background:var(--ink)}
+  .fnote{font-size:12px;color:var(--hint);margin-top:9px}
+  .foot{font-size:12px;color:var(--hint);margin-top:16px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <p class="kicker">Claude Fable 5 · figure 6</p>
+  <h1>The effort dial</h1>
+
+  <div class="lvlrow"><span id="lvl">high</span><span id="dfl">default (unset)</span></div>
+  <div id="tag">You never set it, so every call runs here — the pricier choice on routine work.</div>
+
+  <input type="range" min="0" max="4" step="1" value="2" id="eff" aria-label="Effort level" />
+  <div class="ticks"><span>low</span><span>medium</span><span>high</span><span>xhigh</span><span>max</span></div>
+
+  <div class="gauges">
+    <div><div class="glab"><span class="n">Prose length</span><span class="v" id="p1v">65%</span></div><div class="bar"><div class="fill" id="p1" style="width:65%"></div></div></div>
+    <div><div class="glab"><span class="n">Thinking depth</span><span class="v" id="p2v">65%</span></div><div class="bar"><div class="fill" id="p2" style="width:65%"></div></div></div>
+    <div><div class="glab"><span class="n">Tool calls (count + richness)</span><span class="v" id="p3v">65%</span></div><div class="bar"><div class="fill" id="p3" style="width:65%"></div></div></div>
+  </div>
+
+  <div class="fence">
+    <div class="fhead"><span class="l">Output tokens this call</span><span class="r">max_tokens — the real fence</span></div>
+    <div class="outwrap"><div class="outbar" id="outbar" style="width:55%"></div><div class="fenceline"></div></div>
+    <div class="fnote">Effort biases how hard the model works — it does not cap it. The dark line never moves.</div>
+  </div>
+
+  <p class="foot">Illustrative — relative behaviour, not audited token counts. Concept &amp; design: Ali Zeeshan.</p>
+</div>
+
+<script>
+(function(){
+  var L=[
+    {n:"low",p:20,d:15,t:20,o:18,tag:"Cheap and fast. Often beats a previous model's xhigh — right for triage, classification, formatting.",dflt:false},
+    {n:"medium",p:42,d:40,t:45,o:38,tag:"Summaries, chat, routing. Enough depth without paying for the top tier.",dflt:false},
+    {n:"high",p:65,d:65,t:65,o:55,tag:"You never set it, so every call runs here — the pricier choice on routine work.",dflt:true},
+    {n:"xhigh",p:86,d:88,t:88,o:80,tag:"Reserve for the hardest agentic runs: migrations, audits, novel research.",dflt:false},
+    {n:"max",p:95,d:98,t:97,o:87,tag:"Deepest, slowest, most expensive. Rarely the right default for anything routine.",dflt:false}
+  ];
+  var s=document.getElementById("eff");
+  function set(){
+    var x=L[+s.value];
+    document.getElementById("lvl").textContent=x.n;
+    document.getElementById("tag").textContent=x.tag;
+    document.getElementById("dfl").style.display=x.dflt?"inline":"none";
+    document.getElementById("p1").style.width=x.p+"%";
+    document.getElementById("p2").style.width=x.d+"%";
+    document.getElementById("p3").style.width=x.t+"%";
+    document.getElementById("outbar").style.width=x.o+"%";
+    document.getElementById("p1v").textContent=Math.round(x.p)+"%";
+    document.getElementById("p2v").textContent=Math.round(x.d)+"%";
+    document.getElementById("p3v").textContent=Math.round(x.t)+"%";
+  }
+  s.addEventListener("input",set); set();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,8 @@
+{
+  "$schema": "https://www.schemastore.org/claude-code-plugin.json",
+  "name": "fable5-skills",
+  "version": "0.1.0",
+  "description": "Fable 5-native agent skills for running Claude Fable 5 in production. Skills are auto-discovered from the skills/ directory.",
+  "author": { "name": "Ali Zeeshan", "email": "alphaops@adept-techsolutions.com" },
+  "keywords": ["claude", "fable-5", "skills", "agents", "effort", "memory", "verification"]
+}

@@ -1,0 +1,22 @@
+{
+  "$schema": "https://www.schemastore.org/claude-code-marketplace.json",
+  "name": "fable5-harness",
+  "owner": {
+    "name": "Ali Zeeshan",
+    "email": "alphaops@adept-techsolutions.com"
+  },
+  "metadata": {
+    "description": "Companion skills for the Fable 5 Harness series — production patterns for building on Claude Fable 5.",
+    "version": "0.1.0"
+  },
+  "plugins": [
+    {
+      "name": "fable5-skills",
+      "source": "./",
+      "description": "Fable 5-native agent skills: effort routing, fresh-context verification, guarded memory, refusal-aware calling, prompt/config linting, and the four-stage job-packet loop.",
+      "category": "ai",
+      "version": "0.1.0",
+      "author": { "name": "Ali Zeeshan" }
+    }
+  ]
+}
